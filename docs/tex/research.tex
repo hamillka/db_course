@@ -1,0 +1,126 @@
+\chapter{Исследовательская часть}
+
+\section{Описание исследования}
+
+Индекс -- это объект базы данных, предназначенный для сокращения времени выполнения запроса и обеспечивающий быстрый доступ к данным.
+Индексы являются указателями, которые позволяют эффективно находить и извлекать записи, не прибегая к полному сканированию таблицы.
+Они играют ключевую роль в оптимизации работы баз данных при обработке больших объемов информации.
+
+Было принято решение провести исследование зависимости времени запроса от количества записей в базе данных при наличии и отсутствии дополнительных индексов.
+Для исследования влияния индекса на время выполнения запроса поиска создан индекс на столбцах ($doctor\_id$, $patient\_id$) таблицы Appointments.
+
+Исследовался запрос, приведенный в листинге \ref{lst:query}
+
+\begin{lstlisting}[label=lst:query,caption=\raggedright{Исследованный запрос}]
+SELECT * FROM appointments
+WHERE doctorid = 200 and patientid = 200;
+\end{lstlisting}
+
+Время выполнения запроса в зависимости от количества записей в таблице без дополнительных индексов приведено в таблице~\ref{table:noindextime}.
+
+\begin{table}[h]
+	\begin{center}
+		\caption{Замер времени при отсутствии дополнительных индексов}
+		\label{table:noindextime}
+		\begin{tabular}{|c|c|}
+			\hline
+			\bfseries Количество записей & \bfseries  Время запроса, мкс
+			\csvreader{csv/noindex.csv}{}
+			{\\\hline \csvcoli&\csvcolii}
+			\\\hline
+		\end{tabular}
+	\end{center}
+\end{table}
+
+\clearpage
+Время выполнения запроса в зависимости от количества записей в таблице с использованием дополнительных индексов приведено в таблице~\ref{table:indextime}.
+
+\begin{table}[h]
+	\begin{center}
+		\captionsetup{justification=raggedright,singlelinecheck=off}
+		\caption{Замер времени при наличии дополнительных индексов}
+		\label{table:indextime}
+		\begin{tabular}{|c|c|}
+			\hline
+			\bfseries Количество записей & \bfseries  Время запроса, мкс
+			\csvreader{csv/index.csv}{}
+			{\\\hline \csvcoli&\csvcolii}
+			\\\hline
+		\end{tabular}
+	\end{center}
+\end{table}
+
+На рисунке~\ref{img:g1} представлен график, иллюстрирующий зависимость времени выполнения запроса от количества записей в таблице при наличии и отсутствии дополнительных индексов.
+
+\clearpage
+\begin{figure}[h!]
+	\centering
+	\begin{tikzpicture}
+		\begin{axis}[	
+			xmin=75,
+			xmode=log,
+			height = 0.375\paperheight, 
+			width = 0.609375\paperwidth,
+			xmin=-50,
+			legend pos = north west,
+			table/col sep=comma,
+			xlabel={количество записей},
+			ylabel={время, мкс},
+			]
+			\legend{ 
+				Без индекса, 
+				С индексом,
+			};
+			\addplot [
+			solid, 
+			draw = blue,
+			mark = *, 
+			mark options = {
+				scale = 1.5, 
+				fill = blue, 
+				draw = black
+			}
+			] table [x={count}, y={time}] {csv/noindex.csv};
+			\addplot [
+			dashed, 
+			draw = brown,	
+			mark = star, 
+			mark options = {
+				scale = 1.5, 
+				draw = brown
+			}
+			] table [x={count}, y={time}] {csv/index.csv};
+		\end{axis}
+	\end{tikzpicture}
+	\caption{Сравнение времени выполнения запроса поиска при отсутствии и наличии доп. индекса}
+	\label{img:g1}
+\end{figure}
+
+В результате анализа данных, представленных в таблицах \ref{table:noindextime} и \ref{table:indextime}, сделан следующий вывод: скорость выполнения запроса поиска в таблице с дополнительным индексом выше, чем скорость выполнения этого запроса в таблице без индекса.
+
+В таблице \ref{table:comparing} приведен результат сравнения времени выполнения запроса в таблицах с дополнительным индексом и без него при 1000, 10000, 25000, 50000 и 100000 записей:
+
+\begin{table}[h]
+	\begin{center}
+		\captionsetup{justification=raggedright,singlelinecheck=off}
+		\caption{Результат сравнения при 1000, 10000, 25000, 50000 и 100000 записей в таблицах}
+		\label{table:comparing}
+		\begin{tabular}{|c|c|}
+			\hline
+			Количество записей & $t_{\text{без индекса}} / t_{\text{с индексом}}$ \\ \hline
+			1000               & 1.68               \\ \hline
+			10000              & 1.51               \\ \hline
+			25000 			   & 1.49				\\ \hline 
+			50000              & 1.48               \\ \hline
+			100000             & 1.38               \\ \hline
+		\end{tabular}
+	\end{center}
+\end{table}
+
+\clearpage
+Таким образом, время выполнения запроса в таблице без дополнительного индекса, содержащей 100000 записей, в 3.06 раз выше, чем время выполнения запроса в такой таблице, содержащей 10 записей.
+В таблице с дополнительным индексом при том же количестве записей значение данного коэффициента равно 2.61.
+
+\section*{Вывод}
+Из результатов проведенного исследования следует вывод: выполнение запроса в таблицу без дополнительных индексов требует в среднем на 42~\% больше времени, чем выполнение того же запроса в таблице с индексом.
+

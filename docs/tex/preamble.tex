@@ -1,0 +1,112 @@
+\usepackage{cmap} % Улучшенный поиск русских слов в полученном pdf-файле
+\usepackage[T2A]{fontenc} % Поддержка русских букв
+\usepackage[utf8]{inputenc} % Кодировка utf8
+\usepackage[english,russian]{babel} % Языки: русский, английский
+
+\usepackage[final]{pdfpages}
+
+\usepackage[14pt]{extsizes}
+
+\usepackage{indentfirst}
+\setlength{\parindent}{1.25cm}
+
+\usepackage{multirow}
+\usepackage{threeparttable}
+
+\usepackage{csvsimple}
+\usepackage{geometry}
+\geometry{left=30mm}
+\geometry{right=10mm}
+\geometry{top=20mm}
+\geometry{bottom=20mm}
+
+\usepackage{titlesec}
+\titleformat{\section}
+{\normalsize\bfseries}
+{\thesection}
+{1em}{}
+\titlespacing*{\chapter}{0pt}{-30pt}{8pt}
+\titlespacing*{\section}{\parindent}{*4}{*4}
+\titlespacing*{\subsection}{\parindent}{*4}{*4}
+\titleformat{\chapter}{\LARGE\bfseries}{\thechapter}{16pt}{\LARGE\bfseries}
+\titleformat{\section}{\Large\bfseries}{\thesection}{16pt}{\Large\bfseries}
+
+\usepackage{setspace}
+\onehalfspacing % Полуторный интервал
+
+\sloppy
+
+\frenchspacing
+\usepackage{indentfirst} % Красная строка
+
+\usepackage{amsmath} % Для титульника
+\usepackage{enumitem} 
+\setenumerate[0]{label=\arabic*)} % Изменение вида нумерации списков
+\renewcommand{\labelitemi}{---}
+
+\usepackage{caption}
+\captionsetup[table]{justification=raggedright,singlelinecheck=off} % Изменение подписей к таблицам
+\captionsetup{labelsep=endash, justification=centering} % Настройка подписей float объектов
+\captionsetup[figure]{name=Рисунок} % Изменение подписей к рисункам
+
+\addto\captionsrussian{\renewcommand{\bibname}{Список использованных источников}}
+
+\makeatletter 
+\def\@biblabel#1{#1. } % Изменение нумерации списка использованных источников
+
+% Forbid hyphenation in sections
+\renewcommand\section{\@startsection {section}{1}{\z@}%
+	{-3.5ex \@plus -1ex \@minus -.2ex}%
+	{2.3ex \@plus.2ex}%
+	{\normalfont\Large\bfseries\sloppy}}
+% Forbid line split in subsections
+\renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
+	{-3.25ex\@plus -1ex \@minus -.2ex}%
+	{1.5ex \@plus .2ex}%
+	{\normalfont\large\bfseries\hbox}}
+
+\makeatother
+
+\usepackage{listings} % Для листинга кода
+\lstset{ %
+	language=sql,
+	basicstyle=\small\sffamily,			% размер и начертание шрифта для подсветки кода
+	numbers=none,						% где поставить нумерацию строк (слева\справа)
+	numberstyle=\tiny,		     		% размер шрифта для номеров строк
+	stepnumber=1,						% размер шага между двумя номерами строк
+	numbersep=5pt,						% как далеко отстоят номера строк от подсвечиваемого кода
+	frame=single,						% рисовать рамку вокруг кода
+	tabsize=4,							% размер табуляции по умолчанию равен 4 пробелам
+	captionpos=t,						% позиция заголовка вверху [t] или внизу [b]
+	breaklines=true,					
+	breakatwhitespace=true,				% переносить строки только если есть пробел
+	backgroundcolor=\color{white},
+	basicstyle=\footnotesize\ttfamily,
+	keywordstyle=\color{blue},
+	stringstyle=\color{red},
+	commentstyle=\color{gray},
+	showspaces=false,
+	showstringspaces=false
+}
+
+\usepackage{pgfplots} % для графиков
+\pgfplotsset{compat=1.9}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+
+\usepackage{graphicx}
+\newcommand{\img}[3] {
+	\begin{figure}[h!]
+		\center{\includegraphics[height=#1]{img/#2}}
+		\caption{#3}
+		\label{img:#2}
+	\end{figure}
+}
+
+\usepackage[unicode,pdftex]{hyperref} % Ссылки в pdf
+\hypersetup{hidelinks}
+
+
+
+
+

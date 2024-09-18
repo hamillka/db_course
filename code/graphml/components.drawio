@@ -1,0 +1,100 @@
+<mxfile host="Electron" modified="2024-03-28T17:41:36.392Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.6.8 Chrome/114.0.5735.289 Electron/25.5.0 Safari/537.36" etag="AQoKhi3_eJxBo8c8NfYM" version="21.6.8" type="device">
+  <diagram name="Страница — 1" id="cqY1AdwD4DHyfUYEmchp">
+    <mxGraphModel dx="2021" dy="589" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="wveBwL18WT60hiXL_y53-7" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=10;exitDy=0;exitPerimeter=0;" parent="1" source="wveBwL18WT60hiXL_y53-1" target="wveBwL18WT60hiXL_y53-2" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="wveBwL18WT60hiXL_y53-1" value="Handlers" style="shape=module;align=left;spacingLeft=20;align=center;verticalAlign=top;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="490" y="140" width="190" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="wveBwL18WT60hiXL_y53-2" value="Business&lt;br&gt;Logic" style="shape=module;align=left;spacingLeft=20;align=center;verticalAlign=top;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="270" y="140" width="190" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="wveBwL18WT60hiXL_y53-5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=10;exitDy=0;exitPerimeter=0;" parent="1" source="wveBwL18WT60hiXL_y53-3" target="wveBwL18WT60hiXL_y53-4" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="wveBwL18WT60hiXL_y53-6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=10;entryDy=0;entryPerimeter=0;" parent="1" source="wveBwL18WT60hiXL_y53-3" target="wveBwL18WT60hiXL_y53-2" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="wveBwL18WT60hiXL_y53-3" value="Data&lt;br&gt;Access" style="shape=module;align=left;spacingLeft=20;align=center;verticalAlign=top;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="50" y="140" width="190" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="wveBwL18WT60hiXL_y53-4" value="DB" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" parent="1" vertex="1">
+          <mxGeometry x="-50" y="215" width="60" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="wveBwL18WT60hiXL_y53-9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.106;exitY=0.499;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="wveBwL18WT60hiXL_y53-8" target="wveBwL18WT60hiXL_y53-1" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="wveBwL18WT60hiXL_y53-8" value="UI" style="shape=module;align=left;spacingLeft=20;align=center;verticalAlign=top;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="720" y="230" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="mBziBKL6Zbz12NIJ8GRc-1" value="Patient Service" style="html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="290" y="190" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="mBziBKL6Zbz12NIJ8GRc-2" value="Doctor Service" style="html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="379" y="190" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="mBziBKL6Zbz12NIJ8GRc-3" value="Branch Service" style="html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="290" y="230" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="mBziBKL6Zbz12NIJ8GRc-4" value="User Service" style="html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="379" y="230" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="mBziBKL6Zbz12NIJ8GRc-5" value="Office Service" style="html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="290" y="270" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="mBziBKL6Zbz12NIJ8GRc-6" value="Timetable Service" style="html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="290" y="320" width="159" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="mBziBKL6Zbz12NIJ8GRc-7" value="Appointment Service" style="html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="379" y="270" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="mBziBKL6Zbz12NIJ8GRc-30" value="Patient Repository" style="html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="70" y="190" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="mBziBKL6Zbz12NIJ8GRc-31" value="Doctor Repository" style="html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="159" y="190" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="mBziBKL6Zbz12NIJ8GRc-32" value="Branch Repository" style="html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="70" y="230" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="mBziBKL6Zbz12NIJ8GRc-33" value="User Repository" style="html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="159" y="230" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="mBziBKL6Zbz12NIJ8GRc-34" value="Office Repository" style="html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="70" y="270" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="mBziBKL6Zbz12NIJ8GRc-35" value="Timetable Repository" style="html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="70" y="320" width="159" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="mBziBKL6Zbz12NIJ8GRc-36" value="Appointment Repository" style="html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="159" y="270" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="mBziBKL6Zbz12NIJ8GRc-44" value="Patient Handler" style="html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="510" y="190" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="mBziBKL6Zbz12NIJ8GRc-45" value="Doctor Handler" style="html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="599" y="190" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="mBziBKL6Zbz12NIJ8GRc-46" value="Branch Handler" style="html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="510" y="230" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="mBziBKL6Zbz12NIJ8GRc-47" value="User Handler" style="html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="599" y="230" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="mBziBKL6Zbz12NIJ8GRc-48" value="Office Handler" style="html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="510" y="270" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="mBziBKL6Zbz12NIJ8GRc-49" value="Timetable Handler" style="html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="510" y="320" width="159" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="mBziBKL6Zbz12NIJ8GRc-50" value="Appointment Handler" style="html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="599" y="270" width="70" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

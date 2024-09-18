@@ -1,0 +1,182 @@
+\chapter{Конструкторская часть}
+
+\section{Проектирование базы данных}
+
+Ниже приведены таблицы базы данных:
+\begin{itemize}
+	\item doctors -- таблица врачей;
+	\item patients -- таблица пациентов;
+	\item offices -- таблица кабинетов;
+	\item branches -- таблица филиалов;
+	\item medical\_histories -- таблица медицинских карт пациентов;
+	\item users -- таблица пользователей;
+	\item appointments -- таблица-связь врачей и пациентов;
+	\item timetable -- таблица-связь врачей и кабинетов.
+\end{itemize}
+
+Диаграмма базы данных представлена на рисунке \ref{img:diagram}.
+
+\img{95mm}{diagram}{Диаграмма базы данных}
+
+\clearpage
+В таблицах 2.1--\ref{table:timetable} приведено описание атрибутов каждой таблицы и их ограничения целостности.
+
+\begin{table}[!ht]
+	\begin{center}
+		\label{tbl:doctors}
+		\caption{Описание таблицы Doctors}
+		\begin{tabular}{|c|c|c|c|}
+			\hline
+			\textbf{Атрибут} & \textbf{Назначение}                                               & \textbf{Тип данных} & \textbf{Ограничение}                                                 \\ \hline
+			id                & \begin{tabular}[c]{@{}c@{}}Идентификатор\\ врача\end{tabular}     & Целое число         & \begin{tabular}[c]{@{}c@{}}Первичный ключ,\\ не нулевой\end{tabular} \\ \hline
+			fio               & ФИО врача                                                         & Строка              & Не нулевой                                                           \\ \hline
+			phoneNumber       & \begin{tabular}[c]{@{}c@{}}Номер телефона \\ врача\end{tabular}   & Строка              & Не нулевой                                                           \\ \hline
+			email             & \begin{tabular}[c]{@{}c@{}}Электронная почта\\ врача\end{tabular} & Строка              & Не нулевой                                                           \\ \hline
+			specialization             & \begin{tabular}[c]{@{}c@{}}Специализация\\ врача\end{tabular} & Строка              & Не нулевой                                                           \\ \hline
+		\end{tabular}
+	\end{center}
+\end{table}
+
+\begin{table}[!ht]
+	\begin{center}
+		\label{table:patients}
+		\caption{Описание таблицы Patients}
+		\begin{tabular}{|c|c|c|c|}
+			\hline
+			\textbf{Атрибут} & \textbf{Назначение}                                               & \textbf{Тип данных} & \textbf{Ограничение}                                                 \\ \hline
+			id                & \begin{tabular}[c]{@{}c@{}}Идентификатор\\ пациента\end{tabular}     & Целое число         & \begin{tabular}[c]{@{}c@{}}Первичный ключ,\\ не нулевой\end{tabular} \\ \hline
+			fio               & ФИО пациента                                                         & Строка              & Не нулевой                                                           \\ \hline
+			phoneNumber       & \begin{tabular}[c]{@{}c@{}}Номер телефона \\ пациента\end{tabular}   & Строка              & Не нулевой                                                           \\ \hline
+			email             & \begin{tabular}[c]{@{}c@{}}Электронная почта\\ пациента\end{tabular} & Строка              & Не нулевой                                                           \\ \hline
+			insurance 		& \begin{tabular}[c]{@{}c@{}}Номер страховки\\ пациента\end{tabular} & Строка & Не нулевой \\ \hline
+		\end{tabular}
+	\end{center}
+\end{table}
+
+\begin{table}[!ht]
+	\begin{center}
+		\label{table:branches}
+		\caption{Описание таблицы Branches}
+		\begin{tabular}{|c|c|c|c|}
+			\hline
+			\textbf{Атрибут} & \textbf{Назначение}                                               & \textbf{Тип данных} & \textbf{Ограничение}                                                 \\ \hline
+			id                & \begin{tabular}[c]{@{}c@{}}Идентификатор\\ филиала\end{tabular}     & Целое число         & \begin{tabular}[c]{@{}c@{}}Первичный ключ,\\ не нулевой\end{tabular} \\ \hline
+			name               & Название филиала                                                         & Строка              & Не нулевой                                                           \\ \hline
+			phoneNumber       & \begin{tabular}[c]{@{}c@{}}Номер телефона \\ ресепшена\end{tabular}   & Строка              & Не нулевой                                                           \\ \hline
+			address             &  Адрес филиала & Строка              & Не нулевой                                                           \\ \hline
+		\end{tabular}
+	\end{center}
+\end{table}
+
+\begin{table}[!ht]
+	\begin{center}
+		\label{table:offices}
+		\caption{Описание таблицы Offices}
+		\begin{tabular}{|c|c|c|c|}
+			\hline
+			\textbf{Атрибут} & \textbf{Назначение}                                               & \textbf{Тип данных} & \textbf{Ограничение}                                                 \\ \hline
+			id                & \begin{tabular}[c]{@{}c@{}}Идентификатор\\ кабинета\end{tabular}     & Целое число         & \begin{tabular}[c]{@{}c@{}}Первичный ключ,\\ не нулевой\end{tabular} \\ \hline
+			number               & Номер кабинета                                                         & Целое число              & Не нулевой                                                           \\ \hline
+			floor       & Этаж  & Целое число              & Не нулевой                                                           \\ \hline
+			branchID             &   \begin{tabular}[c]{@{}c@{}}Идентификатор \\филиала, в котором \\расположен кабинет\end{tabular} & Целое число              & \begin{tabular}[c]{@{}c@{}}Внешний ключ,\\ не нулевой\end{tabular}                                                           \\ \hline
+		\end{tabular}
+	\end{center}
+\end{table}
+
+\begin{table}[!ht]
+	\begin{center}
+		\label{table:medicalhistories}
+		\caption{Описание таблицы MedicalHistories}
+		\begin{tabular}{|c|c|c|c|}
+			\hline
+			\textbf{Атрибут} & \textbf{Назначение}                                               & \textbf{Тип данных} & \textbf{Ограничение}                                                 \\ \hline
+			id                & \begin{tabular}[c]{@{}c@{}}Идентификатор\\ карты\end{tabular}     & Целое число         & \begin{tabular}[c]{@{}c@{}}Первичный ключ,\\ не нулевой\end{tabular} \\ \hline
+			chronic\_diseases               & \begin{tabular}[c]{@{}c@{}}Хронические\\ заболевания\\ пациента\end{tabular}                                                         & Строка              & ---                                                           \\ \hline
+			allergies       & Аллергия  & Строка              & ---                                                           \\ \hline
+			blood\_type       & Группа крови  & Строка              & ---                                                           \\ \hline
+			vaccination       & Вакцинация  & Строка              & ---                                                           \\ \hline
+			patientID             &   \begin{tabular}[c]{@{}c@{}}Идентификатор\\ пациента\end{tabular} & Целое число              & \begin{tabular}[c]{@{}c@{}}Внешний ключ,\\ не нулевой\end{tabular}                                                           \\ \hline
+		\end{tabular}
+	\end{center}
+\end{table}
+
+
+\begin{table}[!ht]
+	\begin{center}
+		\label{table:users}
+		\caption{Описание таблицы Users}
+		\begin{tabular}{|c|c|c|c|}
+			\hline
+			\textbf{Атрибут} & \textbf{Назначение}                                               & \textbf{Тип данных} & \textbf{Ограничение}                                                 \\ \hline
+			id                & \begin{tabular}[c]{@{}c@{}}Идентификатор\\ пользователя\end{tabular}     & Целое число         & \begin{tabular}[c]{@{}c@{}}Первичный ключ,\\ не нулевой\end{tabular} \\ \hline
+			login               & \begin{tabular}[c]{@{}c@{}}Логин \\пользователя\end{tabular}                                                         & Строка              &    Не нулевой                                                        \\ \hline
+			password       & \begin{tabular}[c]{@{}c@{}}Пароль \\пользователя\end{tabular}                                                         & Строка              &    Не нулевой                                                        \\ \hline
+			role       & \begin{tabular}[c]{@{}c@{}}Роль \\пользователя\end{tabular}                                                         & Целое число              &    Не нулевой                                                        \\ \hline
+			patientID             &   \begin{tabular}[c]{@{}c@{}}Идентификатор\\ пациента\end{tabular} & Целое число              & Внешний ключ                                                           \\ \hline
+			doctorID             &   \begin{tabular}[c]{@{}c@{}}Идентификатор\\ врача\end{tabular} & Целое число              & Внешний ключ                                                           \\ \hline
+		\end{tabular}
+	\end{center}
+\end{table}
+
+\begin{table}[!ht]
+	\begin{center}
+		\label{table:appointments}
+		\caption{Описание таблицы Appointments}
+		\begin{tabular}{|c|c|c|c|}
+			\hline
+			\textbf{Атрибут} & \textbf{Назначение}                                               & \textbf{Тип данных} & \textbf{Ограничение}                                                 \\ \hline
+			id                & \begin{tabular}[c]{@{}c@{}}Идентификатор\\ записи\end{tabular}     & Целое число         & \begin{tabular}[c]{@{}c@{}}Первичный ключ,\\ не нулевой\end{tabular} \\ \hline
+			doctorID               &  \begin{tabular}[c]{@{}c@{}}Идентификатор\\ врача\end{tabular}                                                         & Целое число              & \begin{tabular}[c]{@{}c@{}}Внешний ключ,\\ не нулевой\end{tabular}                                                            \\ \hline
+			patientID       &  \begin{tabular}[c]{@{}c@{}}Идентификатор\\ пациента\end{tabular}  & Целое число              & \begin{tabular}[c]{@{}c@{}}Внешний ключ,\\ не нулевой\end{tabular}                                                            \\ \hline
+			datetime        &  Дата и время записи & timestamp              &  Не нулевой                                                           \\ \hline
+		\end{tabular}
+	\end{center}
+\end{table}
+
+
+\begin{table}[!ht]
+	\begin{center}
+		\caption{Описание таблицы Timetable}
+		\label{table:timetable}
+		\begin{tabular}{|c|c|c|c|}
+			\hline
+			\textbf{Атрибут} & \textbf{Назначение}                                               & \textbf{Тип данных} & \textbf{Ограничение}                                                 \\ \hline
+			id                & \begin{tabular}[c]{@{}c@{}}Идентификатор\\ записи\end{tabular}     & Целое число         & \begin{tabular}[c]{@{}c@{}}Первичный ключ,\\ не нулевой\end{tabular} \\ \hline
+			doctorID               &      \begin{tabular}[c]{@{}c@{}}Идентификатор\\ врача\end{tabular}                                                      & Целое число              & \begin{tabular}[c]{@{}c@{}}Внешний ключ,\\ не нулевой\end{tabular}                                                            \\ \hline
+			officeID               &      \begin{tabular}[c]{@{}c@{}}Идентификатор\\ кабинета\end{tabular}                                                      & Целое число              & \begin{tabular}[c]{@{}c@{}}Внешний ключ,\\ не нулевой\end{tabular}                                                            \\ \hline
+			workDays             &  Рабочий день & Целое число              & Не нулевой                                                          \\ \hline
+		\end{tabular}
+	\end{center}
+\end{table}
+
+
+\clearpage
+\section{Хранимая функция базы данных}
+
+Хранимая функция -- это набор SQL-выражений, которые выполняют некоторую операцию и возвращают значение.
+
+Разработанная функция $add\_appointment()$ предназначена для создания новой записи приема пациента к врачу в определенное время.
+Она принимает 3 параметра: идентификатор врача, идентификатор пациента и дату и время записи на прием.
+В теле функции выполняется проверка существования врача и пациента с такими идентификаторами.
+В случае успеха создается новая запись в таблице Appointments с заданными значениями полей.
+
+Схема алгоритма работы хранимой функции приведена на рисунке \ref{img:db_func}.
+
+\img{110mm}{db_func}{Схема алгоритма работы хранимой функции создания записи к врачу}
+
+\clearpage
+\section{Роли уровня базы данных}
+Для каждой из ролей сервиса, описанных ранее, необходимо создать роль уровня базы данных. 
+
+\begin{itemize}
+	\item Врач может просмотреть информацию о своих записях, а также создать медицинскую карту пациента, просмотреть информацию о ней и вносить изменения в медицинскую карту определенного пациента.
+	Следовательно, врач должен иметь возможность выполнять операции SELECT в таблице Appointments и операции SELECT, UPDATE и INSERT в таблице MedicalHistories, а также врач может выполнять операцию SELECT в таблице Patients, поскольку ему нужно знать данные пациента, которого нужно осмотреть.
+	\item Пациент может записаться на прием к определенному врачу в определенное время, просмотреть информацию о всех своих записях, а также изменить информацию о них или отменить их.
+	Следовательно, пациент должен иметь возможность выполнять операции SELECT, INSERT, UPDATE и DELETE в таблице Appointments.
+	Поскольку пациент должен знать имена врачей, к которым он записывается, а также дни их работы, то у него должна быть возможность получить информацию из таблиц Doctors и Timetable с помощью операции SELECT.
+	\item Администратор может создать, удалить или изменить запись, просмотреть информацию об определенной записи по идентификатору, получить список всех врачей, список всех пациентов, внести изменения в любую таблицу или добавить/удалить информацию в таблицах.
+	Следовательно, администратор должен иметь возможность выполнять операции SELECT, INSERT, UPDATE и DELETE во всех существующих таблицах без ограничений.
+\end{itemize}
+
+\section*{Вывод}
+В данном разделе была спроектирована база данных, описаны таблицы и хранимая функция, а также выделены роли уровня базы данных.

@@ -1,0 +1,263 @@
+
+\begin{center}
+	\textbf{\large ПРИЛОЖЕНИЕ Б}
+\end{center}
+
+\addcontentsline{toc}{chapter}{ПРИЛОЖЕНИЕ Б}
+
+\begin{lstlisting}[label=lst:proc,caption=\raggedright{Создание хранимой функции}]
+CREATE OR REPLACE FUNCTION add_appointment(
+	p_doctorID INT,
+	p_patientID INT,
+	p_datetime TIMESTAMP
+)
+	RETURNS INT
+	LANGUAGE plpgsql
+AS $$
+DECLARE
+	v_doctorExists BOOLEAN;
+	v_patientExists BOOLEAN;
+	v_appointmentID INT;
+BEGIN
+	SELECT EXISTS(SELECT 1 FROM doctors WHERE id = p_doctorID) INTO v_doctorExists;
+	IF NOT v_doctorExists THEN
+		RAISE EXCEPTION 'Doctor with ID % does not exist', p_doctorID;
+	END IF;
+	
+	SELECT EXISTS(SELECT 1 FROM patients WHERE id = p_patientID) INTO v_patientExists;
+	IF NOT v_patientExists THEN
+		RAISE EXCEPTION 'Patient with ID % does not exist', p_patientID;
+	END IF;
+	
+	INSERT INTO appointments (doctorID, patientID, datetime)
+	VALUES (p_doctorID, p_patientID, p_datetime)
+	RETURNING id INTO v_appointmentID;
+	
+	RETURN v_appointmentID;
+END;
+$$;
+
+\end{lstlisting}
+
+\clearpage
+\begin{lstlisting}[label=lst:init,caption=\raggedright{Создание таблиц (начало)}]
+CREATE TABLE IF NOT EXISTS dicdoc_service.public.doctors (
+	id SERIAL PRIMARY KEY,
+	fio TEXT NOT NULL,
+	phoneNumber TEXT NOT NULL,
+	email TEXT NOT NULL,
+	specialization TEXT NOT NULL
+);
+	
+CREATE TABLE IF NOT EXISTS dicdoc_service.public.patients (
+	id SERIAL PRIMARY KEY,
+	fio TEXT NOT NULL,
+	phoneNumber TEXT NOT NULL,
+	email TEXT NOT NULL,
+	insurance TEXT NOT NULL
+);
+	
+CREATE TABLE IF NOT EXISTS dicdoc_service.public.branches (
+	id SERIAL PRIMARY KEY,
+	name TEXT NOT NULL,
+	address TEXT NOT NULL,
+	phoneNumber TEXT NOT NULL
+);
+	
+CREATE TABLE IF NOT EXISTS dicdoc_service.public.offices (
+	id SERIAL PRIMARY KEY,
+	number INT NOT NULL,
+	floor INT NOT NULL,
+	branchID INT NOT NULL,
+	FOREIGN KEY (branchID) REFERENCES branches(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS dicdoc_service.public.timetable (
+	id SERIAL PRIMARY KEY,
+	doctorID INT NOT NULL,
+	officeID INT NOT NULL,
+	workDays INT NOT NULL,
+	FOREIGN KEY (doctorID) REFERENCES doctors(id) ON DELETE CASCADE,
+	FOREIGN KEY (officeID) REFERENCES offices(id) ON DELETE CASCADE
+);	
+CREATE TABLE IF NOT EXISTS dicdoc_service.public.appointments (
+	id SERIAL PRIMARY KEY,
+	doctorID INT NOT NULL,
+	patientID INT NOT NULL,
+	datetime TIMESTAMP NOT NULL,
+	FOREIGN KEY (doctorID) REFERENCES doctors (id) ON DELETE CASCADE,
+	FOREIGN KEY (patientID) REFERENCES patients (id) ON DELETE CASCADE
+);
+
+\end{lstlisting}
+
+\clearpage
+\setcounter{lstlisting}{1}
+\begin{lstlisting}[label=lst:init,caption=\raggedright{Создание таблиц (конец)}]
+CREATE TABLE IF NOT EXISTS dicdoc_service.public.users (
+	id SERIAL PRIMARY KEY,
+	login TEXT NOT NULL,
+	password TEXT NOT NULL,
+	role INT NOT NULL,
+	patientID INT,
+	doctorID INT,
+	FOREIGN KEY (patientID) REFERENCES patients(id) ON DELETE CASCADE,
+	FOREIGN KEY (doctorID) REFERENCES doctors(id) ON DELETE CASCADE
+);
+	
+CREATE TABLE IF NOT EXISTS dicdoc_service.public.medical_histories (
+	id SERIAL PRIMARY KEY,
+	chronic_diseases text,
+	allergies text,
+	blood_type text,
+	vaccination text,
+	patientID INT NOT NULL,
+	FOREIGN KEY (patientID) REFERENCES patients(id) ON DELETE CASCADE
+);
+\end{lstlisting}
+
+
+\begin{lstlisting}[label=lst:roles,caption=\raggedright{Создание ролей (начало)}]
+CREATE ROLE admin WITH
+	SUPERUSER
+	NOINHERIT
+	NOREPLICATION
+	NOBYPASSRLS
+	LOGIN
+	PASSWORD 'admin';
+
+GRANT ALL PRIVILEGES
+	ON ALL TABLES IN SCHEMA public
+	TO admin;	
+
+CREATE ROLE doctor WITH
+	NOSUPERUSER
+	NOINHERIT
+	NOCREATEROLE
+	NOCREATEDB
+	NOBYPASSRLS
+	NOREPLICATION
+	LOGIN
+	PASSWORD 'doc';
+
+GRANT SELECT
+	ON TABLE public.appointments TO doctor;
+
+\end{lstlisting}
+
+\clearpage
+\setcounter{lstlisting}{2}
+\begin{lstlisting}[label=lst:roles,caption=\raggedright{Создание ролей (конец)}]
+GRANT SELECT, UPDATE, INSERT
+	ON TABLE public.medical_histories TO doctor;
+	
+GRANT SELECT
+	ON TABLE public.patients TO doctor;
+	
+CREATE ROLE patient WITH
+	NOSUPERUSER
+	NOINHERIT
+	NOCREATEROLE
+	NOCREATEDB
+	NOBYPASSRLS
+	NOREPLICATION
+	LOGIN
+	PASSWORD 'patient';
+	
+GRANT SELECT, INSERT, UPDATE, DELETE
+	ON TABLE public.appointments TO patient;
+	
+GRANT SELECT
+	ON TABLE public.doctors TO patient;
+	
+GRANT SELECT
+	ON TABLE public.timetable TO patient;
+	
+\end{lstlisting}
+
+\clearpage
+
+
+\begin{lstlisting}[label=lst:testing,caption=\raggedright{Скрипт для тестирования хранимой функции},language=python]
+import psycopg2
+from psycopg2 import sql
+
+def get_table_data(cursor, table_name):
+	cursor.execute(sql.SQL("SELECT * FROM {}")
+					.format(sql.Identifier(table_name)))
+	return cursor.fetchall()
+
+def main():
+	conn = psycopg2.connect(
+		dbname="dicdoc_service",
+		user="postgres",
+		password="postgres",
+		host="localhost",
+		port="5432"
+	)
+	cursor = conn.cursor()
+	
+	table_name = 'appointments'
+	
+	initial_data = get_table_data(cursor, table_name)
+	
+	doc_id = pat_id = 100
+	datetime = "2024-06-11 19:00:00.000000"
+	
+	cursor.execute("SELECT * FROM add_appointment(%s, %s, %s)", (doc_id, pat_id, datetime,))
+	conn.commit()
+	
+	final_data = get_table_data(cursor, table_name)
+	
+	initial_set = set(initial_data)
+	final_set = set(final_data)
+	
+	print(sorted(list(initial_data)), sorted(list(final_data)), sep="\n\n")
+	
+	added_record = final_set - initial_set
+	
+	cursor.close()
+	conn.close()
+	
+	print("\nAdded: ", added_record)
+
+if __name__ == "__main__":
+	main()
+
+\end{lstlisting}
+
+\clearpage
+\begin{lstlisting}[label=lst:dcompose,caption=\raggedright{Содержимое файла docker-compose.yml},tabsize=2,keywordstyle=\ttfamily]
+services:
+	postgres:
+		image: postgres:latest
+		container_name: postgres
+		restart: on-failure
+		environment:
+			POSTGRES_USER: postgres
+			POSTGRES_PASSWORD: "postgres"
+			POSTGRES_DB: postgres
+		volumes:
+			- ./scripts/1-init.sql:/docker-entrypoint-initdb.d/1-init.sql
+			- db-data:/var/lib/postgresql/data
+		ports:
+			- "5432:5432"
+	
+	dicdoc-service:
+		container_name: dicdoc-service
+		build:
+			context: ./
+		ports:
+			- "8080:8080"
+		depends_on:
+			- postgres
+		links:
+			- postgres
+		restart: on-failure
+		env_file:
+			- configs/cfg.env
+		
+volumes:
+	db-data:
+
+\end{lstlisting}
